@@ -1,7 +1,7 @@
 module tlt_blinker #( parameter hard_level = 4'd5,  parameter hard_led_to_glow = 2'd2, parameter ms=1_000_000)
 (input logic CLOCK_50, input logic [3:0] KEY, output logic [9:0] LEDR, output logic [6:0] HEX0);
 
-    // parameter  hard_level = 4'd5;
+    // parameter  hard_level = 4'd6;
     // parameter hard_led_to_glow = 2'd2;
     wire [3:0] countWire ;
     wire done_W;
