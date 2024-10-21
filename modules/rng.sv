@@ -12,6 +12,6 @@ always_ff @(posedge clock)
 	  else 
 	     rand_num++;
 
-assign new_num = rand_num[0:1];
+assign new_num = rand_num[1:0];
 
 endmodule

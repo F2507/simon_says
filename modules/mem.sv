@@ -10,7 +10,7 @@ reg [1:0] number_memory [3:0];
 always_ff @(posedge clock)
     // read
     if(rw == 0)
-        out_num <= number_memory[address]
+        out_num <= number_memory[address];
 
     // write
     else if(rw) 

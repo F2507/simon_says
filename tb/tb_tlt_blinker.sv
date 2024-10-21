@@ -5,7 +5,7 @@ reg [3:0] key ;
 wire [9:0] led ;
 wire [6:0] hex ;
 
-tlt_blinker #( 4'd6,  2'd1)
+tlt_blinker #( 4'd6,  2'd1, 1)
             tlt_blinker (.CLOCK_50(tb_clk), .KEY(key), .LEDR(led), .HEX0(hex));
 
 initial forever begin
