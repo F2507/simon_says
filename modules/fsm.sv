@@ -1,5 +1,6 @@
 module fsm(
-
+    input logic clk,
+    input logic reset,
     input logic blinker_done,
     input logic cmp_good,
 
@@ -9,7 +10,6 @@ module fsm(
     output logic on_input_block,
     output logic on_blinker,
     output logic [3:0] out_level
-
 );
 
 reg [3:0] level;    // The current level of the game
@@ -17,14 +17,14 @@ reg [3:0] step;     // This keeps track of the player's input
 assign out_level = level;
 
 
-typedef enum logic [2:0] {start, genRandNum, blink, acceptInput, win} State;
+typedef enum logic [2:0] {start, genRandNum, blink, acceptInput, win, defaultState} State;
 State currState;
 
-always_ff @(posedge clk)begin
+always @(posedge clk)begin
     if(reset == 1)  begin
         currState <= start;
-        step <= 0;
-        level <= 0;
+        step <= 4'd0;
+        level <= 4'd0;
     end else begin
     
         case(currState)
@@ -50,31 +50,27 @@ always_ff @(posedge clk)begin
             
             win: currState <= win;
 
-            default : currState <= 3'bxxx;
+            default : currState <= defaultState;
 
         endcase
 
         case (currState)
             start : {getRandNum, rw_mem, on_cmp, on_input_block, on_blinker} <= 5'b00000;
 
+            genRandNum : {getRandNum, rw_mem, on_cmp, on_input_block, on_blinker} <= 5'b11000;
+
+            blink : {getRandNum, rw_mem, on_cmp, on_input_block, on_blinker} <= 5'b00001;
+
+            acceptInput : {getRandNum, rw_mem, on_cmp, on_input_block, on_blinker} <= 5'b00110;
+
+            win : {getRandNum, rw_mem, on_cmp, on_input_block, on_blinker} <= 5'b00000;
+
+            default : {getRandNum, rw_mem, on_cmp, on_input_block, on_blinker} <= 5'bxxxxx;
+
         endcase
     end
         
 end
-
-always_comb 
     
-
-
-assign {getRandNum, rw_mem, on_cmp, on_input_block, on_blinker} = 
-    currState == start ? 5'b00000 : 
-    (currState == genRandNum ? 5'b11000 : 
-    currState == blink ? ) 
-
-
-
-
-    
-
 
 endmodule

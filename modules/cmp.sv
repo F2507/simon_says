@@ -5,10 +5,10 @@ module cmp(
     input logic [3:0] sw,
     input logic [3:0] actual,
 
-    output logic correct_input;  
+    output logic correct_input
 );
 
-always @ (posedge clk and reset == 1) begin
+always @ (posedge clk && reset == 1) begin
     if(on_off == 1) begin
         if(actual == sw)
             correct_input <= 1;
