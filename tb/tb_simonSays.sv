@@ -46,6 +46,15 @@ initial begin
 
     // SW = 10'b0000_00_0100; #20; SW = 10'b0000_00_0000; #20 // Third input should be incorrect and reset back to start
     SW = 10'b0000_00_0001; #20; SW = 10'b0000_00_0000; #20 // Third input should be correct 
+    #2800;
+
+    // Memory contents xx xx xx xx xx xx 00 00 10 10 
+    SW = 10'b0000_00_0100; #20; SW = 10'b0000_00_0000; #20 // First input should be correct
+    SW = 10'b0000_00_0100; #20; SW = 10'b0000_00_0000; #20 // Second input should be correct
+    SW = 10'b0000_00_0001; #20; SW = 10'b0000_00_0000; #20 // Third input should be correct 
+    SW = 10'b0000_00_0001; #20; SW = 10'b0000_00_0000; #20 // Fourth input should be correct 
+
+    #3600;
 
     
     
