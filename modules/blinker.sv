@@ -27,7 +27,7 @@ decoder_2_4 decoder_2_4(.led_in(led_to_glow), .led_out(led_out_decoder));
 
 //The clock is 50MHz, meaning that every 50 * 10 ^ 6 cycles we get  one second
 always @ (posedge clk && reset == 1 ) begin
-    if(level >= 0 && level < 4'd10  && on_off == 1)begin
+    if(level >= 0 && level <= 4'd10  && on_off == 1)begin
         if(time_counter == 25*ms ) begin
         // if(time_counter == 25 ) begin
             led_out <= {6'd0, led_out_decoder};
@@ -39,7 +39,7 @@ always @ (posedge clk && reset == 1 ) begin
         // end else if(time_counter == 50) begin
             led_out <= 10'd0;
             time_counter <= 1;
-            
+
             if (count == level) begin
                 done <= 1;
             end

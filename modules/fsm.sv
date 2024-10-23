@@ -50,9 +50,9 @@ always_ff @(posedge clk)begin
                             end else currState <= acceptInput;
             
             validateInput : if(cmp_good) begin
-                                if(step < level && level < 10) currState <= acceptInput;
-                                else if (step == level && level < 10) currState <= genRandNum;
-                                else if (step == level && level == 10) currState <= win;
+                                if(step < level && level <= 4'd10) currState <= acceptInput;
+                                else if (step == level && level < 4'd10) currState <= genRandNum;
+                                else if (step == level && level == 4'd10) currState <= win;  
                                 
                             end else 
                                 currState <= start;
