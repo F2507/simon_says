@@ -39,15 +39,17 @@ always @ (posedge clk && reset == 1 ) begin
         // end else if(time_counter == 50) begin
             led_out <= 10'd0;
             time_counter <= 1;
+            
+            if (count == level) begin
+                done <= 1;
+            end
 
-        end else if( on_off == 1)
+
+        end else if(on_off == 1)
             time_counter <= time_counter + 1;
 
         
 
-        if (count == level ) begin
-            done <= 1;
-        end
 
     // if level > 4'd10 reset 
     end else begin

@@ -19,6 +19,7 @@ wire on_input_block;
 wire on_blinker;
 wire cmp_good;
 wire blinker_done;
+wire input_done;
 
 wire [9:0] ledr_blinker;
 wire [9:0] ledr_input_block;
@@ -27,7 +28,6 @@ assign LEDR = on_blinker ? ledr_blinker :
 (on_input_block ? ledr_input_block : 10'b0000_0000_00);
 
 assign mem_address = on_blinker ? address_from_blinker : address_from_fsm;
-
 
 rng rng(.clock(CLOCK_50), .reset(KEY[0]), .new_num(newRandNum));
 
@@ -53,7 +53,8 @@ input_block input_block(
     .sw(SW),
 
     .led(ledr_input_block),  
-    .to_cmp(to_cmp)
+    .to_cmp(to_cmp),
+    .input_done(input_done)
 );
 
 cmp cmp(    
@@ -70,6 +71,7 @@ fsm fsm(
     .reset(KEY[0]),
     .blinker_done(blinker_done),
     .cmp_good(cmp_good),
+    .input_done(input_done),
 
     .getRandNum(getRandNum),
     .rw_mem(rw_mem),
