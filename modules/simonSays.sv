@@ -20,6 +20,7 @@ wire on_blinker;
 wire cmp_good;
 wire blinker_done;
 wire input_done;
+wire [3:0] sevenSegDisplay;
 
 wire [9:0] ledr_blinker;
 wire [9:0] ledr_input_block;
@@ -78,8 +79,13 @@ fsm fsm(
     .on_cmp(on_cmp),
     .on_input_block(on_input_block),
     .on_blinker(on_blinker),
-    .out_level(address_from_fsm)
+    .out_level(address_from_fsm),
+    .sevenSegDisplay(sevenSegDisplay)
+
 );
+
+sevenSeg sevenSeg(.counter(sevenSegDisplay), .hex(HEX0));
+
 
 
 endmodule

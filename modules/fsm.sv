@@ -10,7 +10,8 @@ module fsm(
     output logic on_cmp,
     output logic on_input_block,
     output logic on_blinker,
-    output logic [3:0] out_level
+    output logic [3:0] out_level,
+    output logic [3:0] sevenSegDisplay
 );
 
 reg [3:0] level;    // The current level of the game
@@ -76,32 +77,42 @@ end
         case (currState)
             start : begin
                 {getRandNum, rw_mem, on_cmp, on_input_block, on_blinker} <= 5'b00000;
+                sevenSegDisplay <= 4'b0000;
             end
 
             genRandNum : begin
                 {getRandNum, rw_mem, on_cmp, on_input_block, on_blinker} <= 5'b11000;
+                sevenSegDisplay <= 4'b0000;
                 out_level <= level;
+                
             end
 
             blink : begin 
                 {getRandNum, rw_mem, on_cmp, on_input_block, on_blinker} <= 5'b00001;
+                sevenSegDisplay <= 4'b0000;
                 out_level <= level;
             end
 
             acceptInput : begin
                 {getRandNum, rw_mem, on_cmp, on_input_block, on_blinker} <= 5'b00010;
+                sevenSegDisplay <= 4'b0000;
                 out_level <= step;
             end
 
             validateInput : begin 
                 {getRandNum, rw_mem, on_cmp, on_input_block, on_blinker} <= 5'b00100;
+                sevenSegDisplay <= 4'b0000;
                 out_level <= step;
             end
 
-            win : {getRandNum, rw_mem, on_cmp, on_input_block, on_blinker} <= 5'b00000;
+            win : begin 
+                {getRandNum, rw_mem, on_cmp, on_input_block, on_blinker} <= 5'b00000;
+                sevenSegDisplay <= 4'b1001;
+            end
 
             default : begin
                 {getRandNum, rw_mem, on_cmp, on_input_block, on_blinker} <= 5'bxxxxx;
+                sevenSegDisplay <= 4'bxxxx;
             end
 
         endcase
