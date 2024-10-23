@@ -23,7 +23,7 @@ always @ (posedge  clk && reset == 1) begin
         to_cmp <= sw[3:0];
     
     end else begin 
-        led <= 10'bxxxx_xxxx_xx;
+        led <= 10'b0000_0000_00;
         to_cmp <= 4'bxxxx;
     end
 

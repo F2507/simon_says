@@ -20,21 +20,21 @@ assign out_level = level;
 typedef enum logic [2:0] {start, genRandNum, blink, acceptInput, win, defaultState} State;
 State currState;
 
-always @(posedge clk)begin
-    if(reset == 1)  begin
+always_ff @(posedge clk)begin
+    if(reset == 0)  begin
         currState <= start;
         step <= 4'd0;
-        level <= 4'd0;
+        
     end else begin
     
         case(currState)
 
-            start : begin 
-                        currState <= genRandNum;
-                        level <= level + 1;
-                    end
+            start :  currState <= genRandNum; 
 
-            genRandNum: currState <= blink;
+            genRandNum: begin
+                currState <= blink;
+                level <= level + 1'b1;
+            end
 
             blink : if (blinker_done) currState <= acceptInput;
                     else currState <= blink;
@@ -50,14 +50,27 @@ always @(posedge clk)begin
             
             win: currState <= win;
 
-            default : currState <= defaultState;
+            default : begin
+                currState <= defaultState;
+                level <= 4'd0;
+            end
 
         endcase
 
-        case (currState)
-            start : {getRandNum, rw_mem, on_cmp, on_input_block, on_blinker} <= 5'b00000;
+    end
 
-            genRandNum : {getRandNum, rw_mem, on_cmp, on_input_block, on_blinker} <= 5'b11000;
+
+        
+end
+
+    always_comb  begin 
+        case (currState)
+            start : 
+                {getRandNum, rw_mem, on_cmp, on_input_block, on_blinker} <= 5'b00000;
+
+            genRandNum : begin
+                {getRandNum, rw_mem, on_cmp, on_input_block, on_blinker} <= 5'b11000;
+            end
 
             blink : {getRandNum, rw_mem, on_cmp, on_input_block, on_blinker} <= 5'b00001;
 
@@ -65,12 +78,14 @@ always @(posedge clk)begin
 
             win : {getRandNum, rw_mem, on_cmp, on_input_block, on_blinker} <= 5'b00000;
 
-            default : {getRandNum, rw_mem, on_cmp, on_input_block, on_blinker} <= 5'bxxxxx;
+            default : begin
+                {getRandNum, rw_mem, on_cmp, on_input_block, on_blinker} <= 5'bxxxxx;
+            end
 
         endcase
-    end
+
         
-end
+    end
     
 
 endmodule

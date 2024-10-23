@@ -18,9 +18,12 @@ initial forever begin
 end 
 
 initial begin
+    SW = 10'd0;
     #20;
-    KEY[0] = 1;
-    #1000;
+    KEY = 4'd0;
+    #20;
+    KEY = 4'd1;
+    #1200;
     $stop;
 
 end

@@ -6,7 +6,12 @@ module simonSays #( parameter ms=1_000_000) (input logic CLOCK_50, input logic [
 wire [1:0] newRandNum;
 wire [1:0] mem_out_num;
 wire [3:0] to_cmp;
+
 wire [3:0] mem_address;
+wire [3:0] address_from_blinker;
+wire [3:0] address_from_fsm;
+
+
 wire getRandNum;
 wire rw_mem;
 wire on_cmp;
@@ -19,7 +24,9 @@ wire [9:0] ledr_blinker;
 wire [9:0] ledr_input_block;
 
 assign LEDR = on_blinker ? ledr_blinker : 
-(on_input_block ? ledr_input_block : 10'bxxxx_xxxx_xx);
+(on_input_block ? ledr_input_block : 10'b0000_0000_00);
+
+assign mem_address = on_blinker ? address_from_blinker : address_from_fsm;
 
 
 rng rng(.clock(CLOCK_50), .reset(KEY[0]), .new_num(newRandNum));
@@ -31,11 +38,11 @@ blinker(
     .clk(CLOCK_50),
     .reset(KEY[0]),
     .on_off(on_blinker),             
-    .level(mem_address),       
+    .level(address_from_fsm),       
     .led_to_glow(mem_out_num),  
 
     .done(blinker_done),              
-    .count(mem_address),        
+    .count(address_from_blinker),        
     .led_out(ledr_blinker)    
 );
 
@@ -69,7 +76,7 @@ fsm fsm(
     .on_cmp(on_cmp),
     .on_input_block(on_input_block),
     .on_blinker(on_blinker),
-    .out_level(mem_address)
+    .out_level(address_from_fsm)
 );
 
 

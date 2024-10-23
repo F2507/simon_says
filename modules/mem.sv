@@ -13,8 +13,10 @@ always_ff @(posedge clock) begin
         out_num <= number_memory[address];
 
     // write
-    else if(rw) 
+    else if(rw) begin
+        out_num <= 2'bxx;
         number_memory[address] <= in_num;
+    end
 end
 
 endmodule
