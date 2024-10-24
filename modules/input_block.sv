@@ -12,7 +12,6 @@ module input_block(
 reg [3:0]save_sw = 4'd0;
 reg extraClockCount = 0;
 
-// assign input_done = on_off ? (sw != 10'd0 ? 0 : (sw == 10'd0 && save_sw != 4'd0 ? 1 : 0)) : 0;
 assign led = sw;
 reg [9:0] debounce_counter = 10'd0;
 
@@ -41,8 +40,6 @@ always @ (posedge clk && reset == 1) begin
 
         end
 
-
-    
 
     end else begin
         input_done <= 0;

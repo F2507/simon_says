@@ -84,6 +84,7 @@ fsm fsm(
 
 );
 
+// This is primarly used for debugging and for indicating the win state visually
 sevenSeg sevenSeg(.counter(sevenSegDisplay), .hex(HEX0));
 
 

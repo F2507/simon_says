@@ -1,3 +1,5 @@
+
+// Takes a 2 bit input and outputs a 4 bit one hot encoding of it
 module decoder_2_4(
     input logic [1:0] led_in,
     output logic [3:0] led_out

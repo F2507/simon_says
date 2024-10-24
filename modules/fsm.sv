@@ -49,13 +49,21 @@ always_ff @(posedge clk)begin
                                 currState <= validateInput;
                                 step <= step + 1;
                             end else currState <= acceptInput;
-            
+
+            // If the use input was correct 
             validateInput : if(cmp_good) begin
+                                // Check if it is the final input if not, accept another input
                                 if(step < level && level <= 4'd10) currState <= acceptInput;
+
+                                // If it is the final input check if we have reached the final level
+                                // if not generate a new random number and go the next level
                                 else if (step == level && level < 4'd10) currState <= genRandNum;
+
+                                // if this is the final input and the final level, the player wins
                                 else if (step == level && level == 4'd10) currState <= win;  
                                 
-                            end else 
+                            end else
+                                // If you make a mistake, start over
                                 currState <= start;
             
             win: currState <= win;
@@ -67,10 +75,7 @@ always_ff @(posedge clk)begin
 
         endcase
 
-    end
-
-
-        
+    end     
 end
 
     always_comb  begin 

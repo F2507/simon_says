@@ -1,4 +1,4 @@
-// Generate a "random" number by continuously iterating over the clock
+// Generate a "random" number from 0 to 3 (inclusive) by continuously iterating over the clock
 module rng(input logic clock, input logic reset, output logic [1:0] new_num);
 		  
 logic [2:0] rand_num;
