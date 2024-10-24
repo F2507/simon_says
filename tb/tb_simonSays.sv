@@ -21,8 +21,8 @@ decoder_2_4 decoder_2_4(.led_in(memory_val), .led_out(sw_input));
 initial forever begin 
     CLOCK_50 = 0; #5;
     CLOCK_50 = 1; #5;
-    // if(simonSays.fsm.currState == win) 
-    //     $stop;
+    if(simonSays.fsm.currState == win) 
+        $stop;
 end
 
 // Testing for correct input
@@ -82,8 +82,8 @@ initial begin
     // $display("trying to display memory content");
 
     
-    #10000;
-    $stop;
+    // #10000;
+    // $stop;
 
 end
 

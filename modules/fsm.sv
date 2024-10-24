@@ -78,6 +78,7 @@ end
             start : begin
                 {getRandNum, rw_mem, on_cmp, on_input_block, on_blinker} <= 5'b00000;
                 sevenSegDisplay <= 4'b0000;
+                out_level <= 4'bxxxx;
             end
 
             genRandNum : begin
@@ -95,7 +96,7 @@ end
 
             acceptInput : begin
                 {getRandNum, rw_mem, on_cmp, on_input_block, on_blinker} <= 5'b00010;
-                sevenSegDisplay <= 4'b0000;
+                sevenSegDisplay <= 4'b0001;
                 out_level <= step;
             end
 
@@ -108,11 +109,13 @@ end
             win : begin 
                 {getRandNum, rw_mem, on_cmp, on_input_block, on_blinker} <= 5'b00000;
                 sevenSegDisplay <= 4'b1001;
+                out_level <= 4'bxxxx;
             end
 
             default : begin
                 {getRandNum, rw_mem, on_cmp, on_input_block, on_blinker} <= 5'bxxxxx;
                 sevenSegDisplay <= 4'bxxxx;
+                out_level <= 4'bxxxx;
             end
 
         endcase
